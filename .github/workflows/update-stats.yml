@@ -1,0 +1,57 @@
+name: Refresh profile statistics
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/update_stats.py
+      - tests/test_stats.py
+      - .github/workflows/update-stats.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-statistics
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Verify streak calculations
+        run: python3 -m unittest discover -s tests -v
+      - name: Generate dated statistics
+        run: python3 scripts/update_stats.py --output /tmp/profile-statistics
+      - name: Publish statistics without changing profile contributions
+        run: |
+          git fetch --prune origin
+          git status -sb
+          git show-ref --verify refs/remotes/origin/chore/profile-stats
+          if git merge-base --is-ancestor origin/chore/profile-stats origin/main; then
+            exit 1
+          fi
+          git switch --force-create chore/profile-stats origin/chore/profile-stats
+          mkdir -p assets
+          cp /tmp/profile-statistics/streak-*.svg assets/
+          cp /tmp/profile-statistics/stats.json assets/
+          git add assets/streak-*.svg assets/stats.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git diff --cached --name-only
+          git -c user.name=RobaireTH -c user.email=robaireth@gmail.com commit -m "chore(stats): refresh contribution dates and streaks"
+          git fetch --prune origin
+          git status -sb
+          git ls-remote --exit-code --heads origin chore/profile-stats
+          git push origin HEAD:chore/profile-stats
