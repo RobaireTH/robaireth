@@ -1,0 +1,11 @@
+Technology marks identify their respective projects and remain the property of their owners.
+
+Devicon assets: https://github.com/devicons/devicon
+Simple Icons assets: https://github.com/simple-icons/simple-icons
+Lobe Icons assets: https://github.com/lobehub/lobe-icons
+Fabric.js mark: https://github.com/fabricjs
+Trigger.dev mark: https://github.com/triggerdotdev
+Firestore mark: https://github.com/vscode-icons/vscode-icons/blob/master/icons/file_type_firestore.svg
+Nervos, Monad, Solana and USDC marks: https://github.com/trustwallet/assets
+
+Axum and other projects without available standalone marks use text wordmarks.
