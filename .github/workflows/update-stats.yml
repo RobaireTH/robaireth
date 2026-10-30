@@ -1,4 +1,5 @@
 name: Refresh profile statistics
+run-name: Refresh contribution dates and streak record
 
 on:
   schedule:
