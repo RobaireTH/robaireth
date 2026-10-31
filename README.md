@@ -94,8 +94,6 @@
 
 <p align="center">
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/robaireth/robaireth/chore/profile-stats/assets/streak-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/robaireth/robaireth/chore/profile-stats/assets/streak-mobile-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/robaireth/robaireth/chore/profile-stats/assets/streak-dark.svg">
   <img src="https://raw.githubusercontent.com/robaireth/robaireth/chore/profile-stats/assets/streak-light.svg" alt="Dated GitHub contributions and streaks, refreshed hourly. The ring shows the current streak as a percentage of the all-time longest streak." width="720">
 </picture>

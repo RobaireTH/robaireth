@@ -114,21 +114,12 @@ def date_range(item):
     return f'{short_date(item["start"])} – {short_date(item["end"])}' if item["start"] else "No active streak"
 
 
-def mobile_range(item):
-    if not item["start"]:
-        return ["No active streak"]
-    start, end = date.fromisoformat(item["start"]), date.fromisoformat(item["end"])
-    if start.year == end.year:
-        return [f"{start.day} {start:%b} – {end.day} {end:%b %Y}"]
-    return [short_date(item["start"]), f'– {short_date(item["end"])}']
-
-
-def render(stats, theme, mobile=False):
+def render(stats, theme):
     bg, ink, muted, border, accent = (
         ("#0d1117", "#e6edf3", "#9199a4", "#30363d", "#ed9ca9") if theme == "dark"
         else ("#ffffff", "#1f2328", "#656d76", "#d1d9e0", "#b03e56")
     )
-    width, height = (360, 346) if mobile else (720, 250)
+    width, height = 720, 250
     current, longest, progress = stats["current"], stats["longest"], stats["progress"]
     percentage = round(progress * 100)
     title = (
@@ -154,7 +145,7 @@ def render(stats, theme, mobile=False):
             f'font-size="{size}" font-weight="{weight}">{escape(str(value))}</text>'
         )
 
-    cx, cy, radius = (90, 174, 43) if mobile else (360, 76, 43)
+    cx, cy, radius = 360, 76, 43
     circumference = 2 * math.pi * radius
     parts.append(f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="{border}" stroke-width="3"/>')
     if progress > 0:
@@ -167,34 +158,18 @@ def render(stats, theme, mobile=False):
     text(cx, cy + 6, current["days"], 30, accent, 600)
     text(cx, cy + 23, "days", 10)
     label = "Personal best" if current["days"] and current["days"] == longest["days"] else f"{percentage}% of personal best"
-    if mobile:
-        text(180, 39, f'{stats["window"]["contributions"]:,}', 34, ink, 600)
-        text(180, 64, "Contributions · past 12 months", 12, ink)
-        text(180, 86, date_range(stats["window"]), 10)
-        parts.append(f'<path d="M22 108H338M180 135V290" stroke="{border}"/>')
-        text(270, 180, longest["days"], 34, ink, 600)
-        text(270, 199, "days", 10)
-        text(90, 241, "Current streak", 12, ink)
-        text(270, 241, "Longest streak · all time", 11, ink)
-        for i, line in enumerate(mobile_range(current)):
-            text(90, 262 + i * 15, line, 10)
-        for i, line in enumerate(mobile_range(longest)):
-            text(270, 262 + i * 15, line, 10)
-        text(90, 298, label, 10, accent)
-        updated_y = 330
-    else:
-        parts.append(f'<path d="M240 39V190M480 39V190" stroke="{border}"/>')
-        text(120, 86, f'{stats["window"]["contributions"]:,}', 34, ink, 600)
-        text(600, 86, longest["days"], 34, ink, 600)
-        text(600, 105, "days", 10)
-        for x, label_text in [(120, "Contributions · past 12 months"), (360, "Current streak"), (600, "Longest streak · all time")]:
-            text(x, 140, label_text, 12, ink)
-        for x, value in [(120, stats["window"]), (360, current), (600, longest)]:
-            text(x, 163, date_range(value), 11)
-        text(360, 185, label, 11, accent)
-        updated_y = 228
+    parts.append(f'<path d="M240 39V190M480 39V190" stroke="{border}"/>')
+    text(120, 86, f'{stats["window"]["contributions"]:,}', 34, ink, 600)
+    text(600, 86, longest["days"], 34, ink, 600)
+    text(600, 105, "days", 10)
+    for x, label_text in [(120, "Contributions · past 12 months"), (360, "Current streak"), (600, "Longest streak · all time")]:
+        text(x, 140, label_text, 12, ink)
+    for x, value in [(120, stats["window"]), (360, current), (600, longest)]:
+        text(x, 163, date_range(value), 11)
+    text(360, 185, label, 11, accent)
+    updated_y = 228
     updated = datetime.fromisoformat(stats["updated_at"].replace("Z", "+00:00"))
-    text(width / 2, updated_y, f"Updated {updated.day} {updated:%b %Y, %H:%M} UTC · refreshes hourly", 9 if mobile else 10)
+    text(width / 2, updated_y, f"Updated {updated.day} {updated:%b %Y, %H:%M} UTC · refreshes hourly", 10)
     parts.append("</svg>")
     return "".join(parts)
 
@@ -204,7 +179,7 @@ def write_assets(stats, output):
     for theme in ("dark", "light"):
         for mobile in (False, True):
             suffix = f"mobile-{theme}" if mobile else theme
-            (output / f"streak-{suffix}.svg").write_text(render(stats, theme, mobile))
+            (output / f"streak-{suffix}.svg").write_text(render(stats, theme))
     (output / "stats.json").write_text(json.dumps(stats, indent=2) + "\n")
 
 
