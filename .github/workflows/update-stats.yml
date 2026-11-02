@@ -3,7 +3,7 @@ run-name: Refresh contribution dates and streak record
 
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '37 * * * *'
   workflow_dispatch:
   push:
     branches:
