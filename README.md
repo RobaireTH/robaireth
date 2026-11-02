@@ -1,13 +1,11 @@
 <p align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/compact-name-dark.svg">
-  <img src="assets/compact-name-light.svg" alt="Robaire" width="600">
-</picture>
+  <img src="assets/goblin-workshop.png" alt="Three fantasy goblin tinkerers at a workshop: coding, holding a glowing jar, and enjoying a coffee break." width="640">
 </p>
 
 <p align="center">
-<a href="https://robaireth.dev">Website</a> &nbsp;·&nbsp; <a href="https://x.com/0xrobaireth">X</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/robaireth">LinkedIn</a>
+  <a href="https://robaireth.dev"><strong>Website</strong></a> &nbsp;&nbsp;·&nbsp;&nbsp; <a href="https://x.com/0xrobaireth"><strong>X</strong></a> &nbsp;&nbsp;·&nbsp;&nbsp; <a href="https://www.linkedin.com/in/robaireth"><strong>LinkedIn</strong></a>
 </p>
+<br>
 
 <p align="center">
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/rust-dark.svg"><img src="assets/stack/rust-light.svg" alt="Rust" title="Rust" width="32" height="32"></picture> &nbsp; <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/typescript-dark.svg"><img src="assets/stack/typescript-light.svg" alt="TypeScript" title="TypeScript" width="32" height="32"></picture> &nbsp; <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/python-dark.svg"><img src="assets/stack/python-light.svg" alt="Python" title="Python" width="32" height="32"></picture> &nbsp; <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/react-dark.svg"><img src="assets/stack/react-light.svg" alt="React" title="React" width="32" height="32"></picture> &nbsp; <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/nextjs-dark.svg"><img src="assets/stack/nextjs-light.svg" alt="Next.js" title="Next.js" width="32" height="32"></picture> &nbsp; <picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack/tailwindcss-dark.svg"><img src="assets/stack/tailwindcss-light.svg" alt="Tailwind CSS" title="Tailwind CSS" width="32" height="32"></picture>
