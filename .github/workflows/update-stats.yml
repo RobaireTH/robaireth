@@ -38,11 +38,15 @@ jobs:
         run: |
           git fetch --prune origin
           git status -sb
-          git show-ref --verify refs/remotes/origin/chore/profile-stats
-          if git merge-base --is-ancestor origin/chore/profile-stats origin/main; then
-            exit 1
+          if git show-ref --verify --quiet refs/remotes/origin/chore/profile-stats; then
+            if git merge-base --is-ancestor origin/chore/profile-stats origin/main; then
+              exit 1
+            fi
+            git switch --force-create chore/profile-stats origin/chore/profile-stats
+          else
+            git switch --orphan chore/profile-stats
+            git reset --hard
           fi
-          git switch --force-create chore/profile-stats origin/chore/profile-stats
           mkdir -p assets
           cp /tmp/profile-statistics/streak-*.svg assets/
           cp /tmp/profile-statistics/stats.json assets/
@@ -54,5 +58,4 @@ jobs:
           git -c user.name=RobaireTH -c user.email=robaireth@gmail.com commit -m "chore(stats): refresh contribution dates and streaks"
           git fetch --prune origin
           git status -sb
-          git ls-remote --exit-code --heads origin chore/profile-stats
           git push origin HEAD:chore/profile-stats
